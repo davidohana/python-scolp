@@ -260,14 +260,17 @@ time=14:30:34  |  elapsed=0:00:24   |  downloaded=   104,857,600 B  |  speed=  4
 ```
 
 
-# Requirements
+## Requirements
 
 Scolp has no 3rd party requirements other than Python 3.6 or later.
 
 
-# Getting Started
+## Getting Started
 
 Scolp is available via PyPi and can be installed using:
 
 ```pip install scolp```.
 
+## Todo
+
+* Document public API of the library
