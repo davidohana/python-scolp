@@ -1,0 +1,26 @@
+*.class
+*.pyc
+*~
+*.log
+*.tmp
+
+# PyCharm/IDEA files
+.idea/*
+**/.idea/**/dataSources/
+**/.idea/**/dataSources.ids
+**/.idea/**/dataSources.xml
+**/.idea/**/dataSources.local.xml
+**/.idea/**/sqlDataSources.xml
+**/.idea/**/dynamic.xml
+**/.idea/**/uiDesigner.xml
+**/.idea/**/gradle.xml
+**/.idea/**/libraries
+
+# User-specific stuff:
+**/.idea/**/workspace.xml
+**/.idea/**/tasks.xml
+**/.idea/**/misc.xml
+*.iws
+
+dist/
+*egg-info*
