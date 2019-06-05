@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="scolp",
-    version="0.1",
+    version="0.1.1",
     author="David Ohana",
     author_email="davidoha@gmail.com",
     description="Streaming Column Printer",
@@ -14,7 +14,7 @@ setuptools.setup(
     url="https://github.com/davidohana/python-scolp",
     packages=setuptools.find_packages(),
     classifiers=[
-        "Framework :: Django CMS :: 3.6",
+        "Programming Language :: Python :: 3.6",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
         "Topic :: Software Development :: Libraries",
