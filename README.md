@@ -4,7 +4,7 @@
 
 Scolp is Streaming Column Printer for Python 3.6 or later.
 
-Scolp let you easily print masses of tabular data in a streaming fashion. It is perfect for apps that need to print progress reports in columns.
+Scolp let you easily pretty-print masses of tabular data in a streaming fashion - each value is printed when available, without waiting for end of data. It is perfect for apps that need to print progress reports in columns.
 
 Main features:
 
@@ -38,6 +38,40 @@ Main features:
 ## Examples
 
 #### Example 1
+
+Lets start with a simple country statistics output using default settings:
+
+```python
+import scolp
+
+scolp_cfg = scolp.Config()
+scolp_cfg.add_columns("country", "population (mil)", "capital city", "life expectancy (female)",
+                      "life expectancy (male)", "fertility rate")
+scolper = scolp.Scolp(scolp_cfg)
+scolper.print("Netherlands", 16.81, "Amsterdam", 83, 79, 1.5,
+              "China", 1350.0, "Beijing", 76, 72, 1.8,
+              "Israel", 7.71, "Jerusalem", 84, 80, 2.7,
+              "Nigeria")
+scolper.print(174.51)
+```
+
+Output: 
+
+(Note how column width is auto adjusting, line breaks are printed automatically after last column, and each value is printed immediately without waiting for end of row)
+
+```
+country |population (mil)|capital city|life expectancy (female)|life expectancy (male)|fertility rate
+--------|----------------|------------|------------------------|----------------------|--------------
+Netherlands|          16.810|Amsterdam   |                      83|                    79|         1.500
+
+country    |population (mil)|capital city|life expectancy (female)|life expectancy (male)|fertility rate
+-----------|----------------|------------|------------------------|----------------------|--------------
+China      |       1,350.000|Beijing     |                      76|                    72|         1.800
+Israel     |           7.710|Jerusalem   |                      84|                    80|         2.700
+Nigeria    |         174.510|
+```
+
+#### Example 2
 
 Lets build a program that find prime numbers. We will print the count of primes
 we found so far and the last prime found.
@@ -114,7 +148,7 @@ time                      |elapsed |inspected_count|prime_count|last      |progr
 2019-06-05 11:49:53.750463|0:00:23 |            534|         29|10,000,303|    96.667
 ```
 
-#### Example 2
+#### Example 3
 
 Now, lets change the code of the previous example to add a bit of custom formatting:
 
@@ -183,14 +217,14 @@ time                 elapsed  inspected_count prime_count last        progress
 2019-06-05 11:55:09  0:00:24              539          29  10,000,303    96.7%
 ```
 
-#### Example 3
+#### Example 4
 
 Lets build an HTTP big-file downloader.
 
 ```python
 import datetime, urllib3, scolp
 
-url = "http://speedtest.tele2.net/1GB.zip"
+url = "http://speedtest.tele2.net/100MB.zip"
 path = "downloaded.tmp"
 chunk_size_bytes = 1000
 
@@ -198,12 +232,12 @@ scolp_cfg = scolp.Config()
 scolp_cfg.add_column("time", fmt="{:%H:%M:%S}")
 scolp_cfg.add_column("elapsed")
 scolp_cfg.add_column("downloaded", width=16, fmt="{:,} B")
-col = scolp_cfg.add_column("speed", width=14, pad_align=scolp.Alignment.RIGHT)
-col.type_to_format = {float: "{:,.1f} kB/s"}
+scolp_cfg.add_column("speed", width=14, pad_align=scolp.Alignment.RIGHT, type_to_format={float: "{:,.1f} kB/s"})
 
 scolp_cfg.output_each_n_seconds = 1
 scolp_cfg.title_mode = scolp.TitleMode.INLINE
 scolp_cfg.default_column.column_separator = "  |  "
+
 scolper = scolp.Scolp(scolp_cfg)
 
 http = urllib3.PoolManager()
@@ -211,10 +245,12 @@ r = http.request('GET', url, preload_content=False)
 
 dl_bytes = 0
 
+
 def progress_update():
     elapsed_sec = scolper.elapsed_since_init().total_seconds()
     speed_kbps = dl_bytes / elapsed_sec / 1000 if elapsed_sec > 0 else "unknown"
     scolper.print(datetime.datetime.now(), scolper.elapsed_since_init(), dl_bytes, speed_kbps)
+
 
 with open(path, 'wb') as out:
     while True:
@@ -228,6 +264,7 @@ with open(path, 'wb') as out:
 scolper.force_print_next_row()
 progress_update()
 r.release_conn()
+
 ```
 
 Output:
@@ -274,3 +311,4 @@ Scolp is available via PyPi and can be installed using:
 ## Todo
 
 * Document public API of the library
+* Support colors

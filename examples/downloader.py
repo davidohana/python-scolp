@@ -8,8 +8,7 @@ scolp_cfg = scolp.Config()
 scolp_cfg.add_column("time", fmt="{:%H:%M:%S}")
 scolp_cfg.add_column("elapsed")
 scolp_cfg.add_column("downloaded", width=16, fmt="{:,} B")
-col = scolp_cfg.add_column("speed", width=14, pad_align=scolp.Alignment.RIGHT)
-col.type_to_format = {float: "{:,.1f} kB/s"}
+scolp_cfg.add_column("speed", width=14, pad_align=scolp.Alignment.RIGHT, type_to_format={float: "{:,.1f} kB/s"})
 
 scolp_cfg.output_each_n_seconds = 1
 scolp_cfg.title_mode = scolp.TitleMode.INLINE

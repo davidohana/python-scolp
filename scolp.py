@@ -58,8 +58,10 @@ class Config:
 
         self.print_func = self._print_impl
 
-    def add_column(self, title: str, fmt=None, width=None,
-                   title_to_value_separator=None, pad_fill_char=None, pad_align=None, column_separator=None):
+    def add_column(self,
+                   title: str, fmt=None, width=None,
+                   title_to_value_separator=None, pad_fill_char=None, pad_align=None,
+                   column_separator=None, type_to_format=None):
         col = Column()
         col.title = title
         col.format = fmt
@@ -67,9 +69,14 @@ class Config:
         col.title_to_value_separator = title_to_value_separator
         col.pad_fill_char = pad_fill_char
         col.pad_align = pad_align
+        col.type_to_format = type_to_format
         col.column_separator = column_separator
         self.columns.append(col)
-        return col
+        return self
+
+    def add_columns(self, *titles: str):
+        for title in titles:
+            self.add_column(title)
 
     @staticmethod
     def _print_impl(s: str):

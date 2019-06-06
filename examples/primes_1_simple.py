@@ -8,7 +8,9 @@ def is_prime(num):
 
 
 scolp_cfg = scolp.Config()
-scolp_cfg.add_column("time")
+scolp_cfg. \
+    add_column("time"). \
+    add_column("elapsed")
 scolp_cfg.add_column("elapsed")
 scolp_cfg.add_column("inspected_count")
 scolp_cfg.add_column("prime_count")
