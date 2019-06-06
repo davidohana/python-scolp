@@ -23,4 +23,5 @@
 *.iws
 
 dist/
+build/
 *egg-info*
