@@ -7,17 +7,9 @@ def is_prime(num):
     return 2 in [num, 2 ** num % num]
 
 
-scolp_cfg = scolp.Config()
-scolp_cfg. \
-    add_column("time"). \
-    add_column("elapsed")
-scolp_cfg.add_column("elapsed")
-scolp_cfg.add_column("inspected_count")
-scolp_cfg.add_column("prime_count")
-scolp_cfg.add_column("last")
-scolp_cfg.add_column("progress %")
-scolp_cfg.output_each_n_seconds = 1
-scolper = scolp.Scolp(scolp_cfg)
+scolper = scolp.Scolp()
+scolper.config.add_columns("time", "elapsed", "inspected_count", "prime_count", "last", "progress %")
+scolper.config.output_each_n_seconds = 1
 
 prime_count = 0
 last_prime = None

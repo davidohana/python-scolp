@@ -7,19 +7,17 @@ def is_prime(num):
     return 2 in [num, 2 ** num % num]
 
 
-scolp_cfg = scolp.Config()
-scolp_cfg.add_column("time", width=20)
-scolp_cfg.add_column("elapsed")
-scolp_cfg.add_column("inspected_count")
-scolp_cfg.add_column("prime_count")
-scolp_cfg.add_column("last", width=11)
-scolp_cfg.add_column("progress", fmt="{:.1%}")
-scolp_cfg.output_each_n_seconds = 1
-scolp_cfg.header_repeat_row_count_first = 0
-scolp_cfg.default_column.column_separator = " "
-scolp_cfg.default_column.type_to_format[datetime.datetime] = "{:%Y-%m-%d %H:%M:%S}"
-
-scolper = scolp.Scolp(scolp_cfg)
+scolper = scolp.Scolp()
+scolper.config.add_column("time", width=20)
+scolper.config.add_columns("elapsed",
+                           "inspected_count",
+                           "prime_count")
+scolper.config.add_column("last", width=11)
+scolper.config.add_column("progress", fmt="{:.1%}")
+scolper.config.output_each_n_seconds = 1
+scolper.config.header_repeat_row_count_first = 0
+scolper.config.default_column.column_separator = " "
+scolper.config.default_column.type_to_format[datetime.datetime] = "{:%Y-%m-%d %H:%M:%S}"
 
 prime_count = 0
 last_prime = None

@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="scolp",
-    version="0.1.3",
+    version="0.1.4",
     author="David Ohana",
     author_email="davidoha@gmail.com",
     description="Streaming Column Printer",

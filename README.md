@@ -44,10 +44,9 @@ Lets start with a simple country statistics output using default settings:
 ```python
 import scolp
 
-scolp_cfg = scolp.Config()
-scolp_cfg.add_columns("country", "population (mil)", "capital city", "life expectancy (female)",
-                      "life expectancy (male)", "fertility rate")
-scolper = scolp.Scolp(scolp_cfg)
+scolper = scolp.Scolp()
+scolper.config.add_columns("country", "population (mil)", "capital city", "life expectancy (female)",
+                           "life expectancy (male)", "fertility rate")
 scolper.print("Netherlands", 16.81, "Amsterdam", 83, 79, 1.5,
               "China", 1350.0, "Beijing", 76, 72, 1.8,
               "Israel", 7.71, "Jerusalem", 84, 80, 2.7,
@@ -82,16 +81,9 @@ import datetime, scolp
 def is_prime(num):
     return 2 in [num, 2 ** num % num]
 
-# define columns
-scolp_cfg = scolp.Config()
-scolp_cfg.add_column("time")
-scolp_cfg.add_column("elapsed")
-scolp_cfg.add_column("inspected_count")
-scolp_cfg.add_column("prime_count")
-scolp_cfg.add_column("last")
-scolp_cfg.add_column("progress %")
-scolp_cfg.output_each_n_seconds = 1
-scolper = scolp.Scolp(scolp_cfg)
+scolper = scolp.Scolp()
+scolper.config.add_columns("time", "elapsed", "inspected_count", "prime_count", "last", "progress %")
+scolper.config.output_each_n_seconds = 1
 
 prime_count = 0
 last_prime = None
@@ -105,6 +97,7 @@ while prime_count < target_count:
     scolper.print(datetime.datetime.now(), scolper.elapsed_since_init(),
                   scolper.row_index + 1, prime_count, last_prime, progress)
     i += 1
+
 ```
 
 Output: 
@@ -153,18 +146,17 @@ time                      |elapsed |inspected_count|prime_count|last      |progr
 Now, lets change the code of the previous example to add a bit of custom formatting:
 
 ```python
-scolp_cfg = scolp.Config()
-scolp_cfg.add_column("time", width=20)
-scolp_cfg.add_column("elapsed")
-scolp_cfg.add_column("inspected_count")
-scolp_cfg.add_column("prime_count")
-scolp_cfg.add_column("last", width=11)
-scolp_cfg.add_column("progress", fmt="{:.1%}")
-scolp_cfg.output_each_n_seconds = 1
-scolp_cfg.header_repeat_row_count_first = 0
-scolp_cfg.default_column.column_separator = " "
-scolp_cfg.default_column.type_to_format[datetime.datetime] = "{:%Y-%m-%d %H:%M:%S}"
-scolper = scolp.Scolp(scolp_cfg)
+scolper = scolp.Scolp()
+scolper.config.add_column("time", width=20)
+scolper.config.add_columns("elapsed",
+                           "inspected_count",
+                           "prime_count")
+scolper.config.add_column("last", width=11)
+scolper.config.add_column("progress", fmt="{:.1%}")
+scolper.config.output_each_n_seconds = 1
+scolper.config.header_repeat_row_count_first = 0
+scolper.config.default_column.column_separator = " "
+scolper.config.default_column.type_to_format[datetime.datetime] = "{:%Y-%m-%d %H:%M:%S}"
 
 prime_count = 0
 last_prime = None
@@ -176,8 +168,8 @@ while prime_count < target_count:
         prime_count += 1
     progress = prime_count / target_count
     scolper.print(datetime.datetime.now(), scolper.elapsed_since_init(),
-                    scolper.row_index + 1, prime_count, last_prime, progress)
-i += 1
+                  scolper.row_index + 1, prime_count, last_prime, progress)
+    i += 1
 ```
 
 Output:

@@ -1,4 +1,3 @@
-import copy
 import datetime
 import numbers
 from enum import Enum, auto
@@ -85,8 +84,8 @@ class Config:
 
 class Scolp:
 
-    def __init__(self, config: Config):
-        self.config = copy.deepcopy(config)
+    def __init__(self, config=Config()):
+        self.config = config
         self.row_index = 0
         self.last_row_print_time_seconds = 0
         self.init_time = datetime.datetime.now()

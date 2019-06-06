@@ -9,9 +9,9 @@ def is_prime(num):
 
 scolp_cfg = scolp.Config()
 scolp_cfg.add_column("time", width=20)
-scolp_cfg.add_column("elapsed")
-scolp_cfg.add_column("inspected_count")
-scolp_cfg.add_column("prime_count")
+scolp_cfg.add_columns("elapsed",
+                      "inspected_count",
+                      "prime_count")
 scolp_cfg.add_column("last", width=11)
 scolp_cfg.add_column("progress", fmt="{:.1%}")
 scolp_cfg.header_repeat_row_count_first = 0
