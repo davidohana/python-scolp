@@ -155,7 +155,7 @@ class Scolp:
             return col_param
         return self.config.default_column.__dict__[param_name]
 
-    def _print_col_headers(self):
+    def print_col_headers(self):
         self._println()
         for col in self.config.columns:
             title = self._pad(col.title, col, None)
@@ -183,7 +183,7 @@ class Scolp:
             if self.config.title_mode == TitleMode.HEADER and \
                     (self._cur_printed_row_index == self.config.header_repeat_row_count_first or
                      self._cur_printed_row_index % self.config.header_repeat_row_count == 0):
-                self._print_col_headers()
+                self.print_col_headers()
 
         if self.config.title_mode == TitleMode.INLINE and col.title and not col.title.isspace():
             self._print(col.title)
